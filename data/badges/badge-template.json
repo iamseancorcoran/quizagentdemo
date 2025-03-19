@@ -1,21 +1,14 @@
 {
   "template": {
     "name": "Video Comprehension Badge",
-    "description": "Awarded for successfully completing a quiz on {{videoTitle}}",
-    "imageTemplate": "https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Video+Comprehension+Badge",
-    "fields": [
-      {
-        "name": "videoTitle",
-        "description": "Title of the video"
-      },
-      {
-        "name": "completionDate",
-        "description": "Date of quiz completion"
-      },
-      {
-        "name": "score",
-        "description": "Quiz score"
-      }
-    ]
+    "description": "Awarded for demonstrating understanding of video content",
+    "imageTemplate": "https://placehold.co/600x400/gold/white?text=Video+Comprehension+Badge",
+    "criteria": "Awarded to users who achieve 100% on the quiz for a specific video"
+  },
+  "metadata": {
+    "issuer": "Video Learning Quiz System",
+    "issueDate": "AUTO",
+    "expiryDate": "NONE",
+    "badgeType": "Achievement"
   }
 }

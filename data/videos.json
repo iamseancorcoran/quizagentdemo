@@ -7,7 +7,7 @@
       "thumbnail": "https://img.youtube.com/vi/V0WAMRw90w8/maxresdefault.jpg",
       "description": "A quick 5-minute overview of Ethereum for beginners.",
       "duration": "5:00",
-      "transcript": "Ethereum is a decentralized blockchain platform that establishes a peer-to-peer network enabling participants to execute and verify smart contracts. Smart contracts are self-executing with the terms directly written into code. Ethereum also allows for the creation and deployment of decentralized applications (dApps) and is powered by its native cryptocurrency Ether (ETH). Unlike Bitcoin, which was designed primarily as a digital currency, Ethereum was built with broader applications in mind, utilizing blockchain technology to create a platform that extends beyond financial transactions to include various types of agreements and programs."
+      "transcript": "Ethereum is a decentralized blockchain platform that establishes a peer-to-peer network enabling participants to execute and verify smart contracts. Smart contracts are self-executing with the terms directly written into code. Ethereum also allows for the creation and deployment of decentralized applications (dApps) and is powered by its native cryptocurrency Ether (ETH). Unlike Bitcoin which was designed primarily as a digital currency Ethereum was built with broader applications in mind utilizing blockchain technology to create a platform that extends beyond financial transactions to include various types of agreements and programs."
     },
     {
       "id": "video2",
@@ -16,7 +16,7 @@
       "thumbnail": "https://img.youtube.com/vi/HZELpn8kUSY/maxresdefault.jpg",
       "description": "Animated explanation of Ethereum and ETH cryptocurrency.",
       "duration": "7:30",
-      "transcript": "Ethereum is often described as 'the world computer' - a global, decentralized platform for money and new kinds of applications. On Ethereum, you can write code that controls digital value, runs exactly as programmed, and is accessible anywhere in the world. The native cryptocurrency of the Ethereum platform is called Ether or ETH. It serves as the fuel that powers operations on the network. When someone wants to perform an action on the Ethereum network, they must pay a fee in Ether, which is known as 'gas'. This incentivizes miners to process and verify the transaction or execution of smart contracts."
+      "transcript": "Ethereum is often described as 'the world computer' - a global decentralized platform for money and new kinds of applications. On Ethereum you can write code that controls digital value runs exactly as programmed and is accessible anywhere in the world. The native cryptocurrency of the Ethereum platform is called Ether or ETH. It serves as the fuel that powers operations on the network. When someone wants to perform an action on the Ethereum network they must pay a fee in Ether which is known as 'gas'. This incentivizes miners to process and verify the transaction or execution of smart contracts."
     },
     {
       "id": "video3",
@@ -25,7 +25,7 @@
       "thumbnail": "https://img.youtube.com/vi/VQWY8WRleA4/maxresdefault.jpg",
       "description": "Comprehensive explanation of Ethereum in under 10 minutes.",
       "duration": "9:45",
-      "transcript": "Ethereum represents a significant evolution from traditional blockchain technology. Founded by Vitalik Buterin, Ethereum expanded the capabilities of blockchain beyond simple transactions to include programmable smart contracts. These self-executing contracts with predefined rules allow for the development of decentralized applications (dApps). The Ethereum Virtual Machine (EVM) is a Turing-complete software that enables developers to build and deploy these dApps on the Ethereum blockchain. Ethereum has undergone significant upgrades, including the transition from Proof-of-Work to Proof-of-Stake with Ethereum 2.0, which aims to improve scalability, security, and sustainability."
+      "transcript": "Ethereum represents a significant evolution from traditional blockchain technology. Founded by Vitalik Buterin Ethereum expanded the capabilities of blockchain beyond simple transactions to include programmable smart contracts. These self-executing contracts with predefined rules allow for the development of decentralized applications (dApps). The Ethereum Virtual Machine (EVM) is a Turing-complete software that enables developers to build and deploy these dApps on the Ethereum blockchain. Ethereum has undergone significant upgrades including the transition from Proof-of-Work to Proof-of-Stake with Ethereum 2.0 which aims to improve scalability security and sustainability."
     },
     {
       "id": "video4",
@@ -34,7 +34,7 @@
       "thumbnail": "https://img.youtube.com/vi/TqbtwE79X-4/maxresdefault.jpg",
       "description": "Simple 8-minute explanation of Ethereum for beginners.",
       "duration": "8:15",
-      "transcript": "Ethereum is a decentralized blockchain platform that enables smart contracts and decentralized applications (dApps) to be built and run without downtime, fraud, control, or interference from a third party. Ethereum's native cryptocurrency is called Ether (ETH), which is used to pay for transactions and computational services on the network. Ethereum was proposed in 2013 by Vitalik Buterin and went live in 2015. What sets Ethereum apart from Bitcoin is its programmability - developers can use Ethereum to create new applications with their own rules of ownership, transaction formats, and state transition functions."
+      "transcript": "Ethereum is a decentralized blockchain platform that enables smart contracts and decentralized applications (dApps) to be built and run without downtime fraud control or interference from a third party. Ethereum's native cryptocurrency is called Ether (ETH) which is used to pay for transactions and computational services on the network. Ethereum was proposed in 2013 by Vitalik Buterin and went live in 2015. What sets Ethereum apart from Bitcoin is its programmability - developers can use Ethereum to create new applications with their own rules of ownership transaction formats and state transition functions."
     },
     {
       "id": "video5",
@@ -43,7 +43,7 @@
       "thumbnail": "https://img.youtube.com/vi/nWoMmBpbTBA/maxresdefault.jpg",
       "description": "Case study on how blockchain technology is used to make academic degrees cheat-proof.",
       "duration": "6:30",
-      "transcript": "Blockchain technology offers a revolutionary approach to verifying academic credentials. By recording degree information on a blockchain, institutions can create tamper-proof, verifiable credentials that eliminate the possibility of forgery. The LegiCred system demonstrates how blockchain can transform credential verification by creating a permanent, immutable record of degrees that can be instantly verified by employers or other institutions. This eliminates the need for time-consuming background checks and reduces fraud. The decentralized nature of blockchain means that no single entity controls the verification process, increasing transparency and trust in academic credentials worldwide."
+      "transcript": "Blockchain technology offers a revolutionary approach to verifying academic credentials. By recording degree information on a blockchain institutions can create tamper-proof verifiable credentials that eliminate the possibility of forgery. The LegiCred system demonstrates how blockchain can transform credential verification by creating a permanent immutable record of degrees that can be instantly verified by employers or other institutions. This eliminates the need for time-consuming background checks and reduces fraud. The decentralized nature of blockchain means that no single entity controls the verification process increasing transparency and trust in academic credentials worldwide."
     }
   ]
 }
