@@ -1,99 +1,76 @@
-# AI-Powered Quiz System for YouTube Content
+# Video Learning Quiz System
 
-This project implements a no-code/low-code AI-powered quiz system for verifying user understanding of YouTube video content.
+A no-code/low-code solution for creating quizzes based on YouTube video content. The system verifies user understanding by requiring them to watch a video and then answer questions about its content.
 
-## Project Structure
+## Live Demo
 
-```
-/
-├── frontend/           # Frontend web application
-│   ├── css/            # Stylesheets
-│   ├── js/             # JavaScript files
-│   ├── index.html      # Video selection page
-│   ├── player.html     # Video playback page
-│   ├── quiz.html       # Quiz interface
-│   └── results.html    # Results and badge page
-│
-├── backend/            # Backend configuration files for n8n
-│   ├── workflows/      # n8n workflow definitions
-│   └── cline-n8n-integration.js # Examples of n8n-nodes-mcp usage
-│
-├── data/               # Data storage
-│   ├── videos.json     # Video metadata and transcripts
-│   └── badges/         # Badge templates
-│
-├── run-local.js        # Local development server
-├── environment.yml     # Conda environment definition
-├── .gitignore          # Git ignore file
-└── README.md           # Project documentation
-```
-
-## Getting Started
-
-### Environment Setup
-
-This project uses a conda environment named `env5`:
-
-```bash
-# Activate the environment
-conda activate env5
-
-# Deactivate the environment when done
-conda deactivate
-```
-
-### Running the Application Locally
-
-1. Start the local development server:
-
-```bash
-# Make sure you're in the project directory
-cd /Users/user/CLINE/AITCH/QUIZ\ Agent\ N8N\ VERSION\ 1
-
-# Run the local server
-node run-local.js
-```
-
-2. Open your browser and navigate to http://localhost:3002
-
-### Setting Up n8n Workflows
-
-1. Access your n8n instance at http://localhost:5678
-
-2. Import the workflow files from the `backend/workflows` directory:
-   - Go to Workflows in the left sidebar
-   - Click the "Import from File" button
-   - Select the workflow JSON file you want to import
-   - Configure any credentials or settings as needed
-   - Activate the workflow
-
-3. Configure OpenAI API credentials:
-   - Go to Settings > Credentials
-   - Click "Add Credential"
-   - Select "OpenAI API"
-   - Enter your OpenAI API key
-   - Save the credential
-
-## Using n8n-nodes-mcp with Cline
-
-The project includes examples of how to use the n8n-nodes-mcp integration with Cline in the `backend/cline-n8n-integration.js` file. This integration allows you to:
-
-1. Trigger n8n workflows directly from Cline
-2. Get workflow execution results
-3. Create and update workflows
-4. List all available workflows
-
-## Technology Stack
-
-- **Frontend**: HTML, CSS, JavaScript
-- **Backend**: n8n workflow engine
-- **AI Integration**: OpenAI API via n8n
-- **Video Player**: YouTube iframe API
-- **Integration**: n8n-nodes-mcp for Cline integration
+Visit [https://quizagentdemo.vercel.app/](https://quizagentdemo.vercel.app/) to see the application in action.
 
 ## Features
 
-- **Video Selection & Playback**: Browse and watch YouTube videos
-- **AI-Powered Quiz Generation**: Automatically generate multiple-choice questions from video transcripts
-- **Quiz Interface**: Take quizzes with randomized questions and options
-- **Results & Badges**: View quiz results and earn digital badges for perfect scores
+- **Video Selection**: Browse a collection of educational videos about Ethereum and blockchain
+- **Video Player**: Watch videos directly in the application
+- **Progress Tracking**: System tracks video watching progress
+- **Quiz Generation**: Take a quiz after watching at least 90% of a video
+- **Badge System**: Earn digital badges for successful quiz completion
+
+## Technical Implementation
+
+### Architecture
+
+This project is built using a combination of static frontend files and data files:
+
+- **Frontend**: HTML, CSS, and JavaScript files in the `/frontend` directory
+- **Data**: JSON files containing video metadata and quiz questions in the `/data` directory
+- **Deployment**: Configured for Vercel static site hosting
+
+### Project Structure
+
+```
+/
+├── frontend/               # Frontend static files
+│   ├── index.html          # Home page
+│   ├── player.html         # Video player page
+│   ├── quiz.html           # Quiz page
+│   ├── results.html        # Quiz results page
+│   ├── css/                # Stylesheets
+│   └── js/                 # JavaScript files
+├── data/                   # Data files
+│   ├── videos.json         # Video metadata
+│   ├── question-pools.js   # Quiz questions
+│   └── badges/             # Badge templates
+└── vercel.json            # Vercel deployment configuration
+```
+
+### How It Works
+
+1. Users select a video from the main page
+2. The system loads the video and tracks viewing progress
+3. Once 90% of the video is watched, the "Start Quiz" button becomes active
+4. The quiz consists of 3 multiple-choice questions about the video content
+5. Users receive a digital badge if they answer all questions correctly
+
+## Deployment
+
+This project is configured for deployment on Vercel with the following settings:
+
+```json
+{
+  "version": 2,
+  "builds": [
+    { "src": "frontend/**/*", "use": "@vercel/static" },
+    { "src": "data/**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/data/(.*)", "dest": "/data/$1" },
+    { "src": "/(.*)", "dest": "/frontend/$1" }
+  ]
+}
+```
+
+## Future Enhancements
+
+- Integration with n8n for workflow automation
+- Connection to Flowise for AI-powered question generation using the video transcript
+- Implementation of a vector database for more sophisticated question retrieval
+- User authentication and progress tracking
