@@ -29,7 +29,7 @@ let userAnswers = [];
 let questionPools;
 try {
     // Attempt to load question pools dynamically
-    import('../data/question-pools.js')
+    import('/data/question-pools.js')
         .then(module => {
             questionPools = module.default;
             console.log('Question pools loaded successfully');
@@ -37,7 +37,7 @@ try {
         .catch(error => {
             console.error('Error loading question pools:', error);
             // Fall back to fetch
-            fetch('../data/question-pools.js')
+            fetch('/data/question-pools.js')
                 .then(response => response.text())
                 .then(text => {
                     // Extract the object from the text
@@ -93,7 +93,7 @@ async function fetchVideoData(videoId) {
     try {
         // For development we'll load directly from the JSON file
         // In production this would be replaced with an API call to n8n
-        const response = await fetch('../data/videos.json');
+        const response = await fetch('/data/videos.json');
         const data = await response.json();
         return data.videos.find(video => video.id === videoId);
     } catch (error) {

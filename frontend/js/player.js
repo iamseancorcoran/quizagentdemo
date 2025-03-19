@@ -21,7 +21,7 @@ async function fetchVideoData(videoId) {
     try {
         // For development, we'll load directly from the JSON file
         // In production, this would be replaced with an API call to n8n
-        const response = await fetch('../data/videos.json');
+        const response = await fetch('/data/videos.json');
         const data = await response.json();
         return data.videos.find(video => video.id === videoId);
     } catch (error) {
