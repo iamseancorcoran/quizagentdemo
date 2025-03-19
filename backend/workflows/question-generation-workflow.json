@@ -1,0 +1,123 @@
+{
+  "name": "Quiz Question Generation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-questions",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Get video ID from request\nconst videoId = $input.body.videoId;\n\nif (!videoId) {\n  return {\n    error: true,\n    message: 'Video ID is required'\n  };\n}\n\n// In a real implementation, this would fetch from a database\n// For this example, we'll use a hardcoded mapping\nconst videoTranscripts = {\n  'video1': 'Artificial intelligence is the simulation of human intelligence processes by machines, especially computer systems. These processes include learning, reasoning, and self-correction. AI is being used in a variety of ways, from virtual assistants like Siri and Alexa to autonomous vehicles and medical diagnosis. Machine learning is a subset of AI that focuses on the development of computer programs that can access data and use it to learn for themselves. Deep learning is a subset of machine learning that uses neural networks with many layers. These neural networks attempt to simulate the behavior of the human brain, allowing it to learn from large amounts of data.',\n  'video2': 'Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns, and make decisions with minimal human intervention. There are three main types of machine learning: supervised learning, unsupervised learning, and reinforcement learning. In supervised learning, the algorithm is trained on labeled data. In unsupervised learning, the algorithm finds patterns in unlabeled data. In reinforcement learning, the algorithm learns by interacting with an environment and receiving rewards or penalties.',\n  'video3': 'Web development involves creating websites and web applications. It encompasses several aspects, including web design, web publishing, web programming, and database management. The three core technologies of web development are HTML, CSS, and JavaScript. HTML provides the structure of a webpage, CSS controls its appearance, and JavaScript adds interactivity. Front-end development focuses on what users see and interact with, while back-end development deals with server-side logic and database interactions. Responsive web design ensures that websites look good on all devices, from desktop computers to smartphones.'\n};\n\nconst transcript = videoTranscripts[videoId];\n\nif (!transcript) {\n  return {\n    error: true,\n    message: 'Transcript not found for the provided video ID'\n  };\n}\n\nreturn {\n  videoId,\n  transcript\n};"
+      },
+      "name": "Get Transcript",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "operation": "completion",
+        "model": "gpt-3.5-turbo",
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 1000
+        },
+        "prompt": "=You are an educational assessment expert. Based on the following transcript from a YouTube video, generate 3 multiple-choice questions that test understanding of key concepts.\n\nEach question should:\n1. Focus on important information from the transcript\n2. Have 4 answer options (A, B, C, D)\n3. Have exactly one correct answer\n4. Include plausible but incorrect distractors\n\nTRANSCRIPT:\n{{$node[\"Get Transcript\"].json[\"transcript\"]}}\n\nFormat your response as a valid JSON object with this structure:\n{\n  \"questions\": [\n    {\n      \"question\": \"Question text here?\",\n      \"options\": [\n        {\"text\": \"Option 1\", \"correct\": true},\n        {\"text\": \"Option 2\", \"correct\": false},\n        {\"text\": \"Option 3\", \"correct\": false},\n        {\"text\": \"Option 4\", \"correct\": false}\n      ]\n    },\n    ...\n  ]\n}\n\nEnsure your response is properly formatted JSON with no additional text before or after."
+      },
+      "name": "OpenAI",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Parse OpenAI response\nlet questions;\ntry {\n  // Try to parse the response as JSON\n  const responseText = $input.json.text || $input.json.data.choices[0].text;\n  questions = JSON.parse(responseText);\n} catch (error) {\n  // If parsing fails, try to extract JSON from the text\n  const responseText = $input.json.text || $input.json.data.choices[0].text;\n  const jsonMatch = responseText.match(/\\{[\\s\\S]*\\}/m);\n  \n  if (jsonMatch) {\n    try {\n      questions = JSON.parse(jsonMatch[0]);\n    } catch (e) {\n      return {\n        error: true,\n        message: 'Failed to parse OpenAI response as JSON',\n        originalResponse: $input.json\n      };\n    }\n  } else {\n    return {\n      error: true,\n      message: 'Failed to extract JSON from OpenAI response',\n      originalResponse: $input.json\n    };\n  }\n}\n\n// Validate questions format\nif (!questions.questions || !Array.isArray(questions.questions) || questions.questions.length === 0) {\n  return {\n    error: true,\n    message: 'Invalid questions format',\n    originalResponse: questions\n  };\n}\n\n// Randomize question order\nconst shuffledQuestions = [...questions.questions].sort(() => Math.random() - 0.5);\n\n// Randomize option order for each question while preserving correct answer\nshuffledQuestions.forEach(question => {\n  // Find the correct option\n  const correctOption = question.options.find(option => option.correct);\n  \n  // Shuffle options\n  question.options = [...question.options].sort(() => Math.random() - 0.5);\n});\n\nreturn {\n  videoId: $node[\"Get Transcript\"].json.videoId,\n  questions: shuffledQuestions,\n  timestamp: new Date().toISOString(),\n  sessionId: `quiz-${$node[\"Get Transcript\"].json.videoId}-${Date.now()}`\n};"
+      },
+      "name": "Process Questions",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$node[\"Process Questions\"].json}}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Transcript": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Process Questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Questions": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results - Video Learning Quiz</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Quiz Results</h1>
+            <a href="index.html" class="back-link">← Back to videos</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="results-container" class="results-container">
+                <div class="loading">Loading results...</div>
+            </div>
+            
+            <div id="badge-container" class="badge-container" style="display: none;">
+                <h2>Congratulations!</h2>
+                <p>You've earned a badge for your understanding of this video.</p>
+                <div id="badge-image" class="badge-image"></div>
+                <div class="badge-actions">
+                    <button id="download-badge" class="btn primary-btn">Download Badge</button>
+                    <button id="share-badge" class="btn secondary-btn">Share Badge</button>
+                </div>
+            </div>
+            
+            <div class="result-actions">
+                <button id="retry-quiz" class="btn secondary-btn">Retry Quiz</button>
+                <button id="new-video" class="btn primary-btn">Choose Another Video</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Video Learning Quiz</p>
+        </div>
+    </footer>
+
+    <script src="js/results.js"></script>
+</body>
+</html>

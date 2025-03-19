@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Video Learning Quiz</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Quiz: <span id="quiz-title">Loading...</span></h1>
+            <div class="quiz-progress">Question <span id="current-question">1</span> of <span id="total-questions">3</span></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="quiz-container" class="quiz-container">
+                <div class="loading">Loading quiz questions...</div>
+            </div>
+            
+            <div class="quiz-navigation">
+                <button id="prev-question" class="btn secondary-btn" disabled>Previous</button>
+                <button id="next-question" class="btn primary-btn">Next</button>
+                <button id="submit-quiz" class="btn primary-btn" style="display: none;">Submit Answers</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Video Learning Quiz</p>
+        </div>
+    </footer>
+
+    <script src="js/quiz.js"></script>
+</body>
+</html>

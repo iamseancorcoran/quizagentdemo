@@ -1,0 +1,21 @@
+{
+  "template": {
+    "name": "Video Comprehension Badge",
+    "description": "Awarded for successfully completing a quiz on {{videoTitle}}",
+    "imageTemplate": "https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Video+Comprehension+Badge",
+    "fields": [
+      {
+        "name": "videoTitle",
+        "description": "Title of the video"
+      },
+      {
+        "name": "completionDate",
+        "description": "Date of quiz completion"
+      },
+      {
+        "name": "score",
+        "description": "Quiz score"
+      }
+    ]
+  }
+}
