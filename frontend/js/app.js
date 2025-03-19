@@ -32,23 +32,23 @@ function renderVideoCard(video) {
         <p><small>Duration: ${video.duration}</small></p>
         <button class="btn primary-btn" data-id="${video.id}">Watch & Quiz</button>
     `;
-    
+
     // Add event listener to the button
     const button = videoCard.querySelector('button');
     button.addEventListener('click', () => selectVideo(video.id));
-    
+
     return videoCard;
 }
 
 function renderVideos(videos) {
     // Clear loading message
     videoGrid.innerHTML = '';
-    
+
     if (videos.length === 0) {
         videoGrid.innerHTML = '<p>No videos available.</p>';
         return;
     }
-    
+
     // Render each video card
     videos.forEach(video => {
         const videoCard = renderVideoCard(video);
@@ -59,7 +59,7 @@ function renderVideos(videos) {
 function selectVideo(videoId) {
     // Store selected video ID in localStorage
     localStorage.setItem('selectedVideoId', videoId);
-    
+
     // Navigate to the player page
     window.location.href = 'player.html';
 }
@@ -68,7 +68,7 @@ function selectVideo(videoId) {
 async function init() {
     // Fetch videos
     videos = await fetchVideos();
-    
+
     // Render videos
     renderVideos(videos);
 }

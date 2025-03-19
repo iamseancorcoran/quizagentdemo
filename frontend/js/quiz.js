@@ -42,7 +42,7 @@ try {
                 .then(text => {
                     // Extract the object from the text
                     const poolsText = text.substring(
-                        text.indexOf('const questionPools = {'), 
+                        text.indexOf('const questionPools = {'),
                         text.indexOf('module.exports = questionPools')
                     );
                     // Use eval in a safe context to convert the text to an object
@@ -91,8 +91,8 @@ const defaultQuestions = [
 // Functions
 async function fetchVideoData(videoId) {
     try {
-        // For development, we'll load directly from the JSON file
-        // In production, this would be replaced with an API call to n8n
+        // For development we'll load directly from the JSON file
+        // In production this would be replaced with an API call to n8n
         const response = await fetch('../data/videos.json');
         const data = await response.json();
         return data.videos.find(video => video.id === videoId);
@@ -104,41 +104,41 @@ async function fetchVideoData(videoId) {
 
 async function fetchQuizQuestions(videoId) {
     try {
-        // In a real implementation, this would call the n8n webhook to get questions
-        // For development, we'll randomly select questions from our question pools
-        
+        // In a real implementation this would call the n8n webhook to get questions
+        // For development we'll randomly select questions from our question pools
+
         // Simulate API call delay
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
+
         // Check if we have loaded question pools and if there's a pool for this video
         if (questionPools && questionPools[videoId]) {
             const videoPool = questionPools[videoId];
-            
-            // If we have fewer questions than needed, return all of them
+
+            // If we have fewer questions than needed return all of them
             if (videoPool.length <= QUESTIONS_PER_QUIZ) {
                 return videoPool;
             }
-            
-            // Otherwise, randomly select QUESTIONS_PER_QUIZ questions
+
+            // Otherwise randomly select QUESTIONS_PER_QUIZ questions
             const selectedQuestions = [];
             const availableIndices = Array.from({ length: videoPool.length }, (_, i) => i);
-            
+
             for (let i = 0; i < QUESTIONS_PER_QUIZ; i++) {
                 // Randomly select an index from available indices
                 const randomIndex = Math.floor(Math.random() * availableIndices.length);
                 const questionIndex = availableIndices[randomIndex];
-                
+
                 // Add the question to selected questions
                 selectedQuestions.push(videoPool[questionIndex]);
-                
+
                 // Remove the selected index from available indices
                 availableIndices.splice(randomIndex, 1);
             }
-            
+
             console.log(`Randomly selected ${selectedQuestions.length} questions for video ${videoId}`);
             return selectedQuestions;
         }
-        
+
         // Fall back to default questions
         console.log(`No question pool found for video ${videoId}, using default questions`);
         return defaultQuestions;
@@ -150,7 +150,7 @@ async function fetchQuizQuestions(videoId) {
 
 function renderQuestion(questionIndex) {
     const question = questions[questionIndex];
-    
+
     // Create question element
     const questionElement = document.createElement('div');
     questionElement.className = 'question';
@@ -158,7 +158,7 @@ function renderQuestion(questionIndex) {
         <h3 class="question-text">${question.question}</h3>
         <div class="options"></div>
     `;
-    
+
     // Add options
     const optionsContainer = questionElement.querySelector('.options');
     question.options.forEach((option, optionIndex) => {
@@ -167,14 +167,14 @@ function renderQuestion(questionIndex) {
         if (userAnswers[questionIndex] === optionIndex) {
             optionElement.classList.add('selected');
         }
-        
+
         optionElement.innerHTML = `
-            <input type="radio" id="q${questionIndex}-option${optionIndex}" 
-                name="q${questionIndex}" value="${optionIndex}" 
+            <input type="radio" id="q${questionIndex}-option${optionIndex}"
+                name="q${questionIndex}" value="${optionIndex}"
                 ${userAnswers[questionIndex] === optionIndex ? 'checked' : ''}>
             <label for="q${questionIndex}-option${optionIndex}">${option.text}</label>
         `;
-        
+
         // Add event listener
         optionElement.addEventListener('click', () => {
             // Select this option
@@ -182,32 +182,32 @@ function renderQuestion(questionIndex) {
                 el.classList.remove('selected');
             });
             optionElement.classList.add('selected');
-            
+
             // Update user answers
             userAnswers[questionIndex] = optionIndex;
-            
+
             // Check if all questions are answered
             checkAllAnswered();
         });
-        
+
         optionsContainer.appendChild(optionElement);
     });
-    
+
     return questionElement;
 }
 
 function showQuestion(index) {
     // Update current question index
     currentQuestionIndex = index;
-    
+
     // Update navigation buttons
     prevButton.disabled = currentQuestionIndex === 0;
     nextButton.style.display = currentQuestionIndex < questions.length - 1 ? 'inline-block' : 'none';
     submitButton.style.display = currentQuestionIndex === questions.length - 1 ? 'inline-block' : 'none';
-    
+
     // Update question counter
     currentQuestionElement.textContent = currentQuestionIndex + 1;
-    
+
     // Clear container and render current question
     quizContainer.innerHTML = '';
     quizContainer.appendChild(renderQuestion(currentQuestionIndex));
@@ -215,9 +215,9 @@ function showQuestion(index) {
 
 function checkAllAnswered() {
     // Check if all questions have an answer
-    const allAnswered = userAnswers.length === questions.length && 
+    const allAnswered = userAnswers.length === questions.length &&
                         !userAnswers.includes(undefined);
-    
+
     // Enable submit button if all questions are answered
     if (currentQuestionIndex === questions.length - 1) {
         submitButton.disabled = !allAnswered;
@@ -234,12 +234,12 @@ async function submitQuiz() {
                 isCorrect: questions[questionIndex].options[answerIndex].correct
             };
         });
-        
+
         // Calculate score
         const correctAnswers = answers.filter(answer => answer.isCorrect).length;
         const totalQuestions = questions.length;
         const score = (correctAnswers / totalQuestions) * 100;
-        
+
         // Store results
         const quizResults = {
             videoId: quizSession.videoId,
@@ -251,7 +251,7 @@ async function submitQuiz() {
             passed: correctAnswers === totalQuestions // Perfect score required for badge
         };
         localStorage.setItem('quizResults', JSON.stringify(quizResults));
-        
+
         // Navigate to results page
         window.location.href = 'results.html';
     } catch (error) {
@@ -267,13 +267,13 @@ function setupEventListeners() {
             showQuestion(currentQuestionIndex - 1);
         }
     });
-    
+
     nextButton.addEventListener('click', () => {
         if (currentQuestionIndex < questions.length - 1) {
             showQuestion(currentQuestionIndex + 1);
         }
     });
-    
+
     submitButton.addEventListener('click', submitQuiz);
 }
 
@@ -285,35 +285,35 @@ async function init() {
         window.location.href = 'index.html';
         return;
     }
-    
+
     quizSession = JSON.parse(sessionData);
-    
+
     // Fetch video data
     videoData = await fetchVideoData(quizSession.videoId);
     if (!videoData) {
         window.location.href = 'index.html';
         return;
     }
-    
+
     // Update quiz title
     quizTitleElement.textContent = videoData.title;
-    
+
     // Fetch quiz questions
     questions = await fetchQuizQuestions(quizSession.videoId);
     if (questions.length === 0) {
         quizContainer.innerHTML = '<p>Error loading quiz questions. Please try again.</p>';
         return;
     }
-    
+
     // Initialize user answers array
     userAnswers = new Array(questions.length).fill(undefined);
-    
+
     // Update total questions
     totalQuestionsElement.textContent = questions.length;
-    
+
     // Setup event listeners
     setupEventListeners();
-    
+
     // Show first question
     showQuestion(0);
 }

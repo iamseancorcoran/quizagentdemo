@@ -25,8 +25,8 @@ let badgeData;
 // Functions
 async function fetchVideoData(videoId) {
     try {
-        // For development, we'll load directly from the JSON file
-        // In production, this would be replaced with an API call to n8n
+        // For development we'll load directly from the JSON file
+        // In production this would be replaced with an API call to n8n
         const response = await fetch('../data/videos.json');
         const data = await response.json();
         return data.videos.find(video => video.id === videoId);
@@ -38,8 +38,8 @@ async function fetchVideoData(videoId) {
 
 async function fetchBadgeTemplate() {
     try {
-        // For development, we'll load directly from the JSON file
-        // In production, this would be replaced with an API call to n8n
+        // For development we'll load directly from the JSON file
+        // In production this would be replaced with an API call to n8n
         const response = await fetch('../data/badges/badge-template.json');
         return await response.json();
     } catch (error) {
@@ -52,10 +52,10 @@ function renderResults() {
     // Create results summary
     const resultsSummary = document.createElement('div');
     resultsSummary.className = 'result-summary';
-    
+
     // Calculate percentage score
     const percentScore = Math.round(quizResults.score);
-    
+
     // Determine result message based on score
     let resultMessage;
     if (quizResults.passed) {
@@ -63,40 +63,40 @@ function renderResults() {
     } else if (percentScore >= 70) {
         resultMessage = 'Good job! You have a solid understanding of the material.';
     } else if (percentScore >= 40) {
-        resultMessage = 'You\'re on the right track, but might want to review the video again.';
+        resultMessage = 'You\'re on the right track but might want to review the video again.';
     } else {
         resultMessage = 'It seems you need to review the material more carefully.';
     }
-    
+
     resultsSummary.innerHTML = `
         <h2>Your Score</h2>
         <div class="score">${percentScore}%</div>
         <p>${resultMessage}</p>
         <p>You answered ${quizResults.correctAnswers} out of ${quizResults.totalQuestions} questions correctly.</p>
     `;
-    
+
     // Create detailed results
     const detailedResults = document.createElement('div');
     detailedResults.className = 'detailed-results';
     detailedResults.innerHTML = '<h3>Question Summary</h3>';
-    
+
     // Add each question result
     quizResults.answers.forEach((answer, index) => {
         const questionResult = document.createElement('div');
         questionResult.className = `question-result ${answer.isCorrect ? 'correct' : 'incorrect'}`;
-        
+
         questionResult.innerHTML = `
             <p><strong>Question ${index + 1}:</strong> ${answer.isCorrect ? '✓ Correct' : '✗ Incorrect'}</p>
         `;
-        
+
         detailedResults.appendChild(questionResult);
     });
-    
+
     // Clear container and add results
     resultsContainer.innerHTML = '';
     resultsContainer.appendChild(resultsSummary);
     resultsContainer.appendChild(detailedResults);
-    
+
     // Show badge if passed
     if (quizResults.passed) {
         renderBadge();
@@ -107,37 +107,37 @@ function renderBadge() {
     if (!badgeData || !videoData) {
         return;
     }
-    
+
     // Create badge image
     const badgeImage = document.createElement('img');
-    
+
     // Replace template variables in image URL
     let imageUrl = badgeData.template.imageTemplate;
     imageUrl = imageUrl.replace('Video+Comprehension+Badge', encodeURIComponent(videoData.title));
-    
+
     badgeImage.src = imageUrl;
     badgeImage.alt = 'Achievement Badge';
-    
+
     // Add badge image to container
     badgeImageContainer.innerHTML = '';
     badgeImageContainer.appendChild(badgeImage);
-    
+
     // Show badge container
     badgeContainer.style.display = 'block';
 }
 
 function downloadBadge() {
-    // In a real implementation, this would generate a downloadable badge
-    // For development, we'll just open the image in a new tab
+    // In a real implementation this would generate a downloadable badge
+    // For development we'll just open the image in a new tab
     if (badgeImageContainer.querySelector('img')) {
         window.open(badgeImageContainer.querySelector('img').src, '_blank');
     }
 }
 
 function shareBadge() {
-    // In a real implementation, this would share the badge on social media
-    // For development, we'll just show an alert
-    alert('In a real implementation, this would share your badge on social media.');
+    // In a real implementation this would share the badge on social media
+    // For development we'll just show an alert
+    alert('In a real implementation this would share your badge on social media.');
 }
 
 function retryQuiz() {
@@ -166,22 +166,22 @@ async function init() {
         window.location.href = 'index.html';
         return;
     }
-    
+
     quizResults = JSON.parse(resultsData);
-    
+
     // Fetch video data
     videoData = await fetchVideoData(quizResults.videoId);
     if (!videoData) {
         window.location.href = 'index.html';
         return;
     }
-    
+
     // Fetch badge template
     badgeData = await fetchBadgeTemplate();
-    
+
     // Setup event listeners
     setupEventListeners();
-    
+
     // Render results
     renderResults();
 }
